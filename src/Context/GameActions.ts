@@ -1,0 +1,53 @@
+
+
+type TileStatus = 'CLOSE' | 'MINE' | 'EMPTY' 
+type GameStatus = 'STARTED' | 'FINISHED_LOSE' | 'CONTINUES' | 'FINISHED_WIN'
+
+export interface TileState {
+  index: number;
+  isOpen: boolean;
+  tileStatus: TileStatus;
+}
+
+
+
+export const InitialField : TileState[] = Array.from({length: 25}, (_, i) => ({
+  index: i,
+isOpen: false,
+tileStatus: 'CLOSE'
+}))
+
+
+
+
+export interface GameState {
+    gameId: string | null;
+    field: TileState[]; 
+    gameStatus: GameStatus;
+    currentScore: number;
+    minesCount: number;   
+    betAmount: number;    
+    balance: number;
+}
+
+
+export const initialGameState: GameState = {
+    gameId: null,
+    field: InitialField,
+    gameStatus: 'FINISHED_LOSE', 
+    currentScore: 0,
+    minesCount: 3,
+    betAmount: 10,
+    balance: 1000,
+};
+
+export type GameAction =
+    | { type: 'START_GAME'; payload: { gameId: string } }
+    | { type: 'REVEAL_TILE'; payload: { index: number; result: 'MINE' | 'NO_MINE' } }
+    | { type: 'SET_MINES_COUNT'; payload: number }
+    | { type: 'SET_BET_AMOUNT'; payload: number }
+    | { type: 'SET_BALANCE'; payload: number } 
+    | { type: 'END_GAME'; payload: { status: 'WIN' | 'LOSE' } }
+    | { type: 'RESET_GAME'; payload: { prevStatus: 'WIN' | 'LOSE' } }
+    | { type: 'UPDATE_SCORE'; payload: { reward: number } };
+  

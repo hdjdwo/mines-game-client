@@ -1,0 +1,21 @@
+:root {
+    /* BACKGROUNDS */
+    --color-bg-app: #1E252F;           /* Основной фон приложения */
+    --color-bg-sidebar: #27303E;       /* Фон боковой панели */
+    --color-bg-card: #323E50;          /* Фон встроенного поля/карточки */
+    --color-bg-tile: #2A3340;          /* Фон для плиток (специально для контраста) */
+    --color-input-bg: #1A2028;         /* Фон для полей ввода */
+    --color-bg-main: var(--color-bg-app); /* Основное поле = Фон приложения */
+
+    /* TEXT & CONTRAST */
+    --color-text-primary: #F0F4F8;     /* Основной светлый текст */
+    --color-text-secondary: #A6B0BC;   /* Второстепенный текст */
+    --color-border-shadow: #0A0D11;    /* Цвет для теней и рамки */
+    
+    /* ACCENTS & INTERACTIVE */
+    --color-accent: #3498DB;           /* Ярко-синий акцент */
+    
+    /* Дополнительный цвет для состояний (пример) */
+    --color-status-success: #2ECC71;   /* Зеленый */
+    --color-status-error: #E74C3C;     /* Красный */
+}

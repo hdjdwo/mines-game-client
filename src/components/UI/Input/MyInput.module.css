@@ -1,0 +1,35 @@
+.Input {
+  background-color: #2b2e38;
+  color:rgb(145, 153, 168);
+  font-size: clamp(1rem, 1vh + 1rem, 2rem);
+  width: 100%;
+  box-sizing: border-box;
+  border: 3px solid #404452;
+  height: clamp(2.5rem, 1vh + 3rem, 5rem);
+}
+
+.MyInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.Label {
+   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+}
+
+.inputSetting {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.betScale {
+  background-color:  #404452;
+  color:rgb(145, 153, 168);
+  width: 20%;
+  text-align: center;
+  font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+  cursor: pointer;
+}

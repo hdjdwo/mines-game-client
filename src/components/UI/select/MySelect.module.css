@@ -1,0 +1,18 @@
+.Select {
+  background-color: #2b2e38;
+  color:rgb(145, 153, 168);
+  font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+  width: 100%;
+   height: clamp(2.5rem, 1vh + 3rem, 5rem);
+}
+
+.SelectContaiter {
+ display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.Label {
+  font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+}
