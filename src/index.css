@@ -3,14 +3,14 @@
 
 
 @font-face {
-  font-family: "Ubuntu";
+  font-family: "Cinzel";
   font-weight: 500;
   font-style: medium;
-  src: url(./assets//fonts//Ubuntu-Medium.ttf);
+  src: url(./assets//fonts/Cinzel-VariableFont_wght.ttf);
 }
 
 :root {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Cinzel', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-size: 10px;

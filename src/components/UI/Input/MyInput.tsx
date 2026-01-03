@@ -1,5 +1,6 @@
 import React, { type FC } from 'react'
 import classes from './MyInput.module.css'
+import dollarIcon from '../../../assets/image/dollar.svg';
 
 interface betSettingProps {
   min: number;
@@ -36,8 +37,10 @@ export const MyInput: FC<MyInputProps> = ({type, name, labelText, betSetting = {
 
  return (
     <div className={classes.MyInputContainer}>
+      <img className={classes.SVG} src={dollarIcon} alt="" />
       <label className={classes.Label} htmlFor={name}>{labelText}</label>
-      <div className={classes.inputSetting}>
+      
+      <div className={classes.inputSetting}>      
         <input 
           className={classes.Input} 
           type={type} 

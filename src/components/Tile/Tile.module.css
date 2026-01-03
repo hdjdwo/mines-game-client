@@ -6,9 +6,7 @@
   box-sizing: border-box;
   padding: 2px;
   border-radius: 10px;
-  background-color: var(--color-bg-tile); 
-  color: var(--color-text-primary);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);   
+  box-shadow: 0 4px 8px rgba(88, 80, 7, 0.6);   
   transition: all 0.2s ease-in-out;
 }
 
@@ -16,8 +14,8 @@
   transform: translateY(-2px); 
   cursor: pointer;
   box-shadow: 
-    0 6px 12px rgba(0, 0, 0, 0.8), 
-    0 0 12px rgba(52, 152, 219, 0.7); 
+    0 6px 12px rgba(171, 155, 13, 0.8), 
+    0 0 12px rgba(129, 122, 26, 0.7); 
   background-color: #38455A;
 }
 

@@ -1,7 +1,7 @@
 import classes from './Tile.module.css'
-import backStageTile from '../../assets/image/backStageTile.jpg'
-import mineTile from '../../assets/image/mineTile.png'
-import noMineTile from '../../assets/image/noMineTile.png'
+import backStageTile from '../../assets/image/backStage.png'
+import mineTile from '../../assets/image/mine.png'
+import noMineTile from '../../assets/image/noMine.png'
 import type { FC} from 'react'
 import type { TileState } from '../../Context/GameActions'
 

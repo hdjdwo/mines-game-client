@@ -8,11 +8,11 @@ const queryClient = new QueryClient()
 function App() {
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}> 
     <div className='slot_container'>
       <BetPanel />
       <FieldWrapper/>
-    </div>
+      </div>
     </QueryClientProvider>
   )
 }

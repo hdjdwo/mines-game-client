@@ -1,9 +1,10 @@
 .Select {
-  background-color: #2b2e38;
-  color:rgb(145, 153, 168);
+ background-color: rgba(15, 17, 26, 0.8);
+  color: #E3B34C;
   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
   width: 100%;
    height: clamp(2.5rem, 1vh + 3rem, 5rem);
+   border-radius: 4px;
 }
 
 .SelectContaiter {
@@ -14,5 +15,6 @@
 }
 
 .Label {
+  color: #8B7355;
   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
 }
