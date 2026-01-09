@@ -29,7 +29,7 @@
 .paytable {
     position: relative;
     display: flex;
-    font-size: 2em; /* Твой размер текста */
+    font-size: 2em; 
     justify-content: center;
     align-items: center;
     gap: 15px;
@@ -79,7 +79,7 @@
     z-index: 15;
 }
 
-/* Черная подложка активного шага */
+
 .paytable_active::after {
     content: '';
     position: absolute;
@@ -95,7 +95,7 @@
     pointer-events: none;
 }
 
-/* Огненный эффект (x10+) */
+
 .fire_tier::after {
     content: '';
     position: absolute;
@@ -115,7 +115,7 @@
     text-shadow: 0 0 10px #ff4e50, 0 0 20px #ff8c00;
 }
 
-/* Эпический эффект (x50+) */
+
 .epic_tier::after {
     content: '';
     position: absolute;
@@ -136,7 +136,7 @@
     animation: textFlicker 2s infinite;
 }
 
-/* АНИМАЦИИ С ФИКСИРОВАННЫМ ЦЕНТРИРОВАНИЕМ */
+
 
 @keyframes firePulse {
     0% { 

@@ -7,8 +7,8 @@ export const FieldWrapper = () => {
   const sectionStyle: React.CSSProperties = {
   width: "100%",
   height: "100%",
-  marginLeft: "-2px", // Заезжаем на левую панель, перекрывая шов
-  borderLeft: "1px solid rgba(255,255,255,0.05)", // Едва заметная линия-разделитель (опционально)
+  marginLeft: "-2px", 
+  borderLeft: "1px solid rgba(255,255,255,0.05)", 
   backgroundImage: `
     linear-gradient(to right, #12121a 0%, rgba(18, 18, 26, 0) 15%), 
     url(${background})

@@ -110,7 +110,6 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
     <p>Загрузка...</p>
   ) : (
     visibleSteps.map((item) => {
-      // Эффект применяется только если это ТЕКУЩИЙ шаг (то, что мы уже выиграли)
       const isCurrentActive = hasWonSomething && item.step === currentStep;
       
       const isFire = isCurrentActive && item.multiplier >= 10 && item.multiplier < 50;
