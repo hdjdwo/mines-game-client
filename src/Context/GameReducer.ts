@@ -15,24 +15,38 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
         payoutTable: action.payload.payoutTable    
       };
 
-    case 'REVEAL_TILE':
-      
-      return {
-        ...state,
-        field: state.field.map((tile) =>
-          tile.index === action.payload.index
-            ? {
-                ...tile,
-                isOpen: true,
-                tileStatus: action.payload.result === 'MINE' ? 'MINE' : 'EMPTY',
-              }
-            : tile
-        ),
-        
-       
-        gameStatus: action.payload.result === 'MINE' ? 'FINISHED_LOSE' : 'CONTINUES',
-        currentScore: Math.floor(state.betAmount * action.payload.multiplier * 100) / 100
-      };
+   case 'REVEAL_TILE': {
+  const { index, result, status, allMines, multiplier } = action.payload;
+  const isLost = status === 'LOST' || result === 'MINE';
+
+  if (isLost && allMines) {
+    return {
+      ...state,
+      field: state.field.map((tile) => {
+        const isMine = allMines.includes(tile.index);
+        return {
+          ...tile,
+          isOpen: isMine ? true : tile.isOpen, 
+          tileStatus: isMine ? 'MINE' : tile.tileStatus,
+          isExploded: tile.index === index, 
+        };
+      }),
+      gameStatus: 'FINISHED_LOSE',
+      currentScore: 0, 
+    };
+  }
+
+  return {
+    ...state,
+    field: state.field.map((tile) =>
+      tile.index === index
+        ? { ...tile, isOpen: true, tileStatus: 'EMPTY' }
+        : tile
+    ),
+    gameStatus: 'CONTINUES',
+    currentScore: Math.floor(state.betAmount * multiplier * 100) / 100,
+  };
+}
 
     case 'END_GAME':
       return {

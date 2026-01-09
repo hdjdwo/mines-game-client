@@ -25,6 +25,8 @@ interface RevealCellRepsonce {
   safePick: number;
   message?: string;
   error?: string;
+  allMines?: number[];
+  status?: string;
 }
 
 

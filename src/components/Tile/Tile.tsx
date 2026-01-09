@@ -6,15 +6,16 @@ import type { FC} from 'react'
 import type { TileState } from '../../Context/GameActions'
 
 interface TileProps extends TileState {
-  onTileClick: () => void
+  onTileClick: () => void;
+  
 }
 
 
-export const Tile: FC<TileProps> = ({ isOpen, tileStatus, onTileClick}) => {
+export const Tile: FC<TileProps> = ({ isOpen, tileStatus, onTileClick, isExploded}) => {
  
   return (
     <div
-     className={classes.tile}
+     className={isExploded ? classes.tile_exploded : classes.tile }
      onClick={onTileClick}
      >
       

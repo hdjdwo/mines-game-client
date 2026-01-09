@@ -7,6 +7,7 @@ export interface TileState {
   index: number;
   isOpen: boolean;
   tileStatus: TileStatus;
+  isExploded?: boolean;
 }
 
 
@@ -47,7 +48,7 @@ export const initialGameState: GameState = {
 
 export type GameAction =
     | { type: 'START_GAME'; payload: { gameId: string, payoutTable: { step: number; multiplier: number }[]} }
-    | { type: 'REVEAL_TILE'; payload: { index: number, result: 'MINE' | 'NO_MINE', multiplier: number} }
+    | { type: 'REVEAL_TILE'; payload: { index: number, result: 'MINE' | 'NO_MINE', multiplier: number, status?: string, allMines?: number[]} }
     | { type: 'SET_MINES_COUNT'; payload: number }
     | { type: 'SET_BET_AMOUNT'; payload: number }
     | { type: 'SET_BALANCE'; payload: number } 

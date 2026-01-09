@@ -136,6 +136,10 @@
     animation: textFlicker 2s infinite;
 }
 
+.fire_tier::after, .epic_tier::after {
+       isolation: isolate; 
+    transform: translate(-50%, -50%) translateZ(0);
+}
 
 
 @keyframes firePulse {
