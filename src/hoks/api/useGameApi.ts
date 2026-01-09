@@ -1,5 +1,5 @@
-import { useMutation} from "@tanstack/react-query"
-import { fetchRevealCell, fetchStartGame } from "../../api/gameAPI"
+import {  useMutation, useQuery} from "@tanstack/react-query"
+import { fetchPaytable, fetchRevealCell, fetchStartGame } from "../../api/gameAPI"
 
 
 export const useGameStatus = () => {
@@ -23,5 +23,14 @@ export const useTileStatus = () => {
     onError: (error) => {
             console.error("Проблема с определением мины:", error.message);
         }
+  })
+}
+
+export const usePaytable = (minesCount: number, isGameStarted: string) => {
+  return useQuery({
+    queryKey: ['paytable', minesCount],
+    queryFn: () => fetchPaytable(minesCount),
+    enabled: isGameStarted.includes('FINISHED') && minesCount > 0,
+    staleTime: Infinity
   })
 }

@@ -6,7 +6,7 @@ import classes from './Field.module.css'
 export const Field = () => {
 
   const dispatch = useGameDispatch()
-   const {field, gameId, gameStatus} = useGame()
+   const {field, gameId, gameStatus, currentScore} = useGame()
    const {mutate, isPending} = useTileStatus()
 
    const handleTileClick = (index: number) => {
@@ -14,20 +14,23 @@ export const Field = () => {
       return
     }
 
+
+
     mutate(
       {tileIndex: index, gameId},
       {
         onSuccess: (data) => {
           dispatch({type: 'REVEAL_TILE', payload: {
             index: index,
-            result: data.result === 'mine' ? 'MINE' : 'NO_MINE'
+            result: data.result === 'mine' ? 'MINE' : 'NO_MINE',
+            multiplier: data.currentMultiplier
           }})
         }
       }
     )
    }
   
-
+console.log(currentScore)
   return (
     <div className={classes.field}>
       {field.map((tile) => (

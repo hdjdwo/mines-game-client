@@ -1,6 +1,8 @@
 
 import { InitialField, initialGameState, type GameAction, type GameState } from "./GameActions";
 
+
+
 export const gameReducer = (state: GameState, action: GameAction): GameState => {
   switch (action.type) {
     case 'START_GAME':
@@ -9,10 +11,12 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
         gameId: action.payload.gameId,
         gameStatus: 'STARTED',
         field: InitialField, 
-        currentScore: 0,     
+        currentScore: 0,
+        payoutTable: action.payload.payoutTable    
       };
 
     case 'REVEAL_TILE':
+      
       return {
         ...state,
         field: state.field.map((tile) =>
@@ -24,8 +28,10 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
               }
             : tile
         ),
+        
        
         gameStatus: action.payload.result === 'MINE' ? 'FINISHED_LOSE' : 'CONTINUES',
+        currentScore: Math.floor(state.betAmount * action.payload.multiplier * 100) / 100
       };
 
     case 'END_GAME':

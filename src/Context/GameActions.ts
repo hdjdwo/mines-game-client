@@ -20,6 +20,8 @@ tileStatus: 'CLOSE'
 
 
 
+
+
 export interface GameState {
     gameId: string | null;
     field: TileState[]; 
@@ -28,6 +30,7 @@ export interface GameState {
     minesCount: number;   
     betAmount: number;    
     balance: number;
+    payoutTable: { step: number; multiplier: number }[]
 }
 
 
@@ -39,11 +42,12 @@ export const initialGameState: GameState = {
     minesCount: 3,
     betAmount: 10,
     balance: 1000,
+    payoutTable: []
 };
 
 export type GameAction =
-    | { type: 'START_GAME'; payload: { gameId: string } }
-    | { type: 'REVEAL_TILE'; payload: { index: number; result: 'MINE' | 'NO_MINE' } }
+    | { type: 'START_GAME'; payload: { gameId: string, payoutTable: { step: number; multiplier: number }[]} }
+    | { type: 'REVEAL_TILE'; payload: { index: number, result: 'MINE' | 'NO_MINE', multiplier: number} }
     | { type: 'SET_MINES_COUNT'; payload: number }
     | { type: 'SET_BET_AMOUNT'; payload: number }
     | { type: 'SET_BALANCE'; payload: number } 
