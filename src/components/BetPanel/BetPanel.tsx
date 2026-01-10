@@ -1,11 +1,12 @@
 import classes from './BetPanel.module.css'
-import { useGameStatus, usePaytable, useWinGame} from '../../hoks/api/useGameApi';
+import { useGameStatus, usePaytable, useTESTWinCombo, useWinGame} from '../../hoks/api/useGameApi';
 import { MyInput } from '../UI/Input/MyInput';
 import { MySelect } from '../UI/select/MySelect';
 import {  useGame, useGameDispatch } from '../../Context/GameHoks';
 import panelBackground from '../../assets/image/betPanel.png'
 import { MultiplierField } from '../MultiplierField/MultiplierField';
 import { MyButton } from '../UI/Button/MyButton';
+import { Cheat } from '../CHEAT/Cheat';
 
 
 
@@ -15,8 +16,11 @@ export const BetPanel = () => {
   const {mutate: winGameMutate, isPending: isWinPending} = useWinGame() 
   const disptatch = useGameDispatch()
   const {gameStatus, minesCount, betAmount, payoutTable, field, currentScore, gameId} = useGame()
-  const {data, isLoading} = usePaytable(minesCount,gameStatus)
+  const {data: paytableData, isLoading: isPaytableLoading} = usePaytable(minesCount,gameStatus)
 
+  const {data: CHEATdata, isLoading: isCHEATLoading} = useTESTWinCombo(gameId ? gameId : '')
+
+  const resultCHEAT = CHEATdata?.result ? CHEATdata?.result : []
  
  const isGameActive = gameStatus === 'STARTED' || gameStatus === 'CONTINUES';
   const handleMainAction = () => {
@@ -43,9 +47,10 @@ export const BetPanel = () => {
   }
 };
 
+
   
 
-  const paytable = data ? data.table : []
+  const paytable = paytableData ? paytableData.table : []
    const activeTable = (gameStatus === 'STARTED' || gameStatus === 'CONTINUES') 
     ? payoutTable 
     : paytable;
@@ -120,7 +125,7 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
     <MultiplierField 
     isCurrentEpic={isCurrentEpic} 
     isCurrentFire={isCurrentFire} 
-    isLoading={isLoading} visibleSteps={visibleSteps} 
+    isLoading={isPaytableLoading} visibleSteps={visibleSteps} 
     hasWonSomething={hasWonSomething} 
     currentStep={currentStep}
     />   
@@ -136,6 +141,8 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
           : 'НАЧАТЬ ИГРУ'
         }
       </MyButton>
+
+      <Cheat mines={resultCHEAT} isLoading={isCHEATLoading} status={gameStatus.includes('FINISHED')}/>
    </div>
   )
 }

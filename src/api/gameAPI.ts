@@ -36,6 +36,11 @@ interface WinGame {
   error?: string;
 }
 
+interface TEST_getWinCombo {
+  result: number[];
+  error?: string;
+}
+
 
  export const fetchStartGame = async (minesCount: number): Promise<StartGameResponse> => {
   const res = await fetch(`${BASE_URL}/start-game`, {
@@ -88,5 +93,18 @@ export const fetchWinGame = async (gameId: string) : Promise<WinGame> => {
     throw new Error(errorData.error || 'Failed win game')
   }
 
+  return res.json()
+}
+
+export const TEST_winCombo = async (gameId: string) : Promise<TEST_getWinCombo> => {
+  const res = await fetch(`${BASE_URL}/test-route`, {
+    method: 'POST',
+    body: JSON.stringify({gameId}),
+    headers: {'Content-type' : 'application/json; charset=UTF-8'}
+  });
+  if(!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || 'Failed to get wincombo.');
+  }
   return res.json()
 }

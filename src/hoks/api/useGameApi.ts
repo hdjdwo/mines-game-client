@@ -1,5 +1,5 @@
 import {  useMutation, useQuery} from "@tanstack/react-query"
-import { fetchPaytable, fetchRevealCell, fetchStartGame, fetchWinGame } from "../../api/gameAPI"
+import { fetchPaytable, fetchRevealCell, fetchStartGame, fetchWinGame, TEST_winCombo } from "../../api/gameAPI"
 
 
 export const useGameStatus = () => {
@@ -44,5 +44,14 @@ export const useWinGame = () => {
     onError: (error) => {
             console.error("Проблема с определением выигрыша:", error.message);
         }
+  })
+}
+
+export const useTESTWinCombo = (gameId: string) => {
+  return useQuery({
+    queryKey: ['cheat', gameId],
+    queryFn: () => TEST_winCombo(gameId),
+    enabled: !!gameId,
+     staleTime: Infinity
   })
 }
