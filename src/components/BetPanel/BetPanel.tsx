@@ -1,33 +1,49 @@
 import classes from './BetPanel.module.css'
-import { useGameStatus, usePaytable} from '../../hoks/api/useGameApi';
+import { useGameStatus, usePaytable, useWinGame} from '../../hoks/api/useGameApi';
 import { MyInput } from '../UI/Input/MyInput';
 import { MySelect } from '../UI/select/MySelect';
 import {  useGame, useGameDispatch } from '../../Context/GameHoks';
 import panelBackground from '../../assets/image/betPanel.png'
+import { MultiplierField } from '../MultiplierField/MultiplierField';
+import { MyButton } from '../UI/Button/MyButton';
 
 
 
 export const BetPanel = () => {
 
-
-  const {mutate, isPending} = useGameStatus()
-
-  
- 
+  const {mutate: startGameMutate, isPending: isStartPending} = useGameStatus() 
+  const {mutate: winGameMutate, isPending: isWinPending} = useWinGame() 
   const disptatch = useGameDispatch()
-  const {gameStatus, minesCount, betAmount, payoutTable, field} = useGame()
-
+  const {gameStatus, minesCount, betAmount, payoutTable, field, currentScore, gameId} = useGame()
   const {data, isLoading} = usePaytable(minesCount,gameStatus)
 
  
  const isGameActive = gameStatus === 'STARTED' || gameStatus === 'CONTINUES';
-  const handleStartGame = () => {
-  mutate(minesCount, {
-  onSuccess: (serverData) => {
-    disptatch({type: 'START_GAME', payload: {gameId: serverData.gameId, payoutTable: serverData.paytable}})
+  const handleMainAction = () => {
+  if (isGameActive) {
+    if (hasWonSomething) {
+      winGameMutate(gameId ? gameId : '', {
+        onSuccess: (data) => {
+          disptatch({ 
+            type: 'CASHOUT', 
+            payload: { winAmount: data.winAmount, allMines: data.allMines } 
+          });
+        }
+      });
+    }
+  } else {
+    startGameMutate(minesCount, {
+      onSuccess: (serverData) => {
+        disptatch({ 
+          type: 'START_GAME', 
+          payload: { gameId: serverData.gameId, payoutTable: serverData.paytable } 
+        });
+      }
+    });
   }
- })
-  }
+};
+
+  
 
   const paytable = data ? data.table : []
    const activeTable = (gameStatus === 'STARTED' || gameStatus === 'CONTINUES') 
@@ -35,6 +51,7 @@ export const BetPanel = () => {
     : paytable;
 
   const currentStep = field.filter(tile => tile.isOpen && tile.tileStatus === 'EMPTY').length;
+
 
   const getVisibleSteps = () => {
 
@@ -79,7 +96,6 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
   zIndex: 2
 };
 
-
   
   return (
   <div style={sectionStyle}  className={classes.container}>
@@ -90,7 +106,7 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
       onChange = {(e: React.ChangeEvent<HTMLInputElement>) => disptatch({type: 'SET_BET_AMOUNT', payload: Number(e.target.value)})}
       onValueChange={(newValue) => disptatch({ type: 'SET_BET_AMOUNT', payload: newValue })}
       value = {betAmount}
-      disabled={isGameActive || isPending}
+      disabled={isGameActive || isWinPending || isStartPending}
       type='number'
        name='currency'
         labelText='Сумма ставки'/>
@@ -98,41 +114,28 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
       <MySelect
       value = {minesCount}
       onChange = {(e: React.ChangeEvent<HTMLSelectElement>) => disptatch({type: 'SET_MINES_COUNT', payload: Number(e.target.value)})}
-      disabled={isGameActive || isPending}
+      disabled={isGameActive || isWinPending || isStartPending}
       />
     </div>
-
-   <div className={`
-  ${classes.paytable} 
-  ${isCurrentEpic ? classes.global_epic : isCurrentFire ? classes.global_fire : ''}
-`}>
-  {isLoading ? (
-    <p>Загрузка...</p>
-  ) : (
-    visibleSteps.map((item) => {
-      const isCurrentActive = hasWonSomething && item.step === currentStep;
-      
-      const isFire = isCurrentActive && item.multiplier >= 10 && item.multiplier < 50;
-      const isEpic = isCurrentActive && item.multiplier >= 50;
-
-      return (
-        <div 
-          key={item.step} 
-          className={`
-            ${classes.paytable_element} 
-            ${isCurrentActive ? classes.paytable_active : ''} 
-            ${isFire ? classes.fire_tier : ''} 
-            ${isEpic ? classes.epic_tier : ''}
-          `}
-        >
-          <span className={classes.multiplier_text}>x{item.multiplier}</span>
-        </div>
-      );
-    })
-  )}
-</div>
-   
-   <button className={classes.StartGame} onClick={handleStartGame} disabled={isPending}>НАЧАТЬ ИГРУ</button>
+    <MultiplierField 
+    isCurrentEpic={isCurrentEpic} 
+    isCurrentFire={isCurrentFire} 
+    isLoading={isLoading} visibleSteps={visibleSteps} 
+    hasWonSomething={hasWonSomething} 
+    currentStep={currentStep}
+    />   
+    <MyButton 
+        handleStartGame={handleMainAction} 
+        isPending={isWinPending || isStartPending} 
+        isFirstStep={gameStatus === 'STARTED' && currentStep === 0}
+        isFire={isCurrentFire}
+        isEpic={isCurrentEpic}
+      >
+        {isGameActive 
+          ? hasWonSomething ? `ЗАБРАТЬ ${currentScore}` : 'ЗАБРАТЬ'
+          : 'НАЧАТЬ ИГРУ'
+        }
+      </MyButton>
    </div>
   )
 }

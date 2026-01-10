@@ -1,5 +1,5 @@
 
-import { InitialField, initialGameState, type GameAction, type GameState } from "./GameActions";
+import { InitialField,  type GameAction, type GameState } from "./GameActions";
 
 
 
@@ -48,17 +48,22 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
   };
 }
 
-    case 'END_GAME':
+ 
+    case 'CASHOUT' :
       return {
         ...state,
-        gameStatus: action.payload.status === 'LOSE' ? 'FINISHED_LOSE' : 'FINISHED_WIN',
-      };
-
-    case 'RESET_GAME':
-      return {
-        ...initialGameState,
-        gameStatus: action.payload.prevStatus === 'LOSE' ? 'FINISHED_LOSE' : 'FINISHED_WIN',
-      };
+        field: state.field.map((tile) => {
+          const isMine = action.payload.allMines.includes(tile.index);
+          return {
+            ...tile,
+            isOpen: isMine ? true : tile.isOpen,
+            tileStatus: isMine ? 'MINE' : tile.tileStatus,
+            isExploded: false
+          }
+        }),
+        gameStatus: 'FINISHED_WIN',
+        currentScore: action.payload.winAmount
+      }
 
     case 'UPDATE_SCORE':
       return {

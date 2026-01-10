@@ -52,7 +52,6 @@ export type GameAction =
     | { type: 'SET_MINES_COUNT'; payload: number }
     | { type: 'SET_BET_AMOUNT'; payload: number }
     | { type: 'SET_BALANCE'; payload: number } 
-    | { type: 'END_GAME'; payload: { status: 'WIN' | 'LOSE' } }
-    | { type: 'RESET_GAME'; payload: { prevStatus: 'WIN' | 'LOSE' } }
-    | { type: 'UPDATE_SCORE'; payload: { reward: number } };
+    | { type: 'UPDATE_SCORE'; payload: { reward: number } }
+    | { type: 'CASHOUT'; payload: { winAmount: number; allMines: number[] } }
   

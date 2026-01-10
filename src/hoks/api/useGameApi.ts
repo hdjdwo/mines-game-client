@@ -1,5 +1,5 @@
 import {  useMutation, useQuery} from "@tanstack/react-query"
-import { fetchPaytable, fetchRevealCell, fetchStartGame } from "../../api/gameAPI"
+import { fetchPaytable, fetchRevealCell, fetchStartGame, fetchWinGame } from "../../api/gameAPI"
 
 
 export const useGameStatus = () => {
@@ -32,5 +32,17 @@ export const usePaytable = (minesCount: number, isGameStarted: string) => {
     queryFn: () => fetchPaytable(minesCount),
     enabled: isGameStarted.includes('FINISHED') && minesCount > 0,
     staleTime: Infinity
+  })
+}
+
+export const useWinGame = () => {
+  return useMutation({
+    mutationFn: fetchWinGame,
+    onSuccess: (data) => {
+      console.log('Статус игры:', data.status)
+    },
+    onError: (error) => {
+            console.error("Проблема с определением выигрыша:", error.message);
+        }
   })
 }

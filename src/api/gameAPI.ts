@@ -29,6 +29,13 @@ interface RevealCellRepsonce {
   status?: string;
 }
 
+interface WinGame {
+  status: string;
+  allMines: number[];
+  winAmount: number;
+  error?: string;
+}
+
 
  export const fetchStartGame = async (minesCount: number): Promise<StartGameResponse> => {
   const res = await fetch(`${BASE_URL}/start-game`, {
@@ -67,5 +74,19 @@ export const fetchPaytable = async (minesCount: number): Promise<getPaytable> =>
     const errorData = await res.json();
     throw new Error(errorData.error || 'Failed to get paytable.');
   }
+  return res.json()
+}
+
+export const fetchWinGame = async (gameId: string) : Promise<WinGame> => {
+  const res = await fetch(`${BASE_URL}/win-game`, {
+    method: 'POST',
+    body: JSON.stringify({gameId}),
+    headers: {'Content-type' : 'application/json; charset=UTF-8'}
+  });
+  if(!res.ok) {
+    const errorData = await res.json()
+    throw new Error(errorData.error || 'Failed win game')
+  }
+
   return res.json()
 }
