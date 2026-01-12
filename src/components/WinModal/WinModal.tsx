@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 import classes from './WinModal.module.css'
 import coinSVG from '../../assets/image/coin.svg'
+import useSound from 'use-sound';
+import winSfc from '../../assets/sounds/win.mp3'
+import backgroundMusic from '../../assets/sounds/background.mp3'
 
 interface IWinPanel {
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -11,12 +14,21 @@ interface IWinPanel {
 }
 
 export const WinModal: FC<IWinPanel> = ({onClick, win, visible, currency, multiplier}) => {
-
+  const [playWin, {stop: stopWin}] = useSound(winSfc, {volume: 0.8})
+  const [playBackground, { stop: stopBackground }] = useSound(backgroundMusic, { 
+  volume: 0.4, 
+  loop: true   
+});
   const [numberAnimation, setNumberAnimation] = useState(false);
   const [currenWinNumber, setCurrentWinNumber] = useState(0)
   const timerId = useRef<ReturnType<typeof setInterval> | null>(null)
   const openTimeRef = useRef<number>(0)
   
+  useEffect(() => {
+  playBackground();
+  
+  return () => stopBackground();
+}, [playBackground, stopBackground]);
   
   const coins = useMemo(() => {
   if (!visible) return [];
@@ -35,6 +47,7 @@ export const WinModal: FC<IWinPanel> = ({onClick, win, visible, currency, multip
 
   useEffect(() => {
    if(visible) {
+    playWin()
     openTimeRef.current = Date.now()
     const count = win/100.
     timerId.current = setInterval(() => {
@@ -48,7 +61,10 @@ export const WinModal: FC<IWinPanel> = ({onClick, win, visible, currency, multip
         return prev + +count
       })
     }, 50);
-    return () => clearInterval(timerId.current ? timerId.current : undefined)
+    return () => {
+    stopWin(); 
+    if (timerId.current) clearInterval(timerId.current);
+  };
    } else {
     setCurrentWinNumber(0)
     setNumberAnimation(false)
@@ -69,6 +85,7 @@ export const WinModal: FC<IWinPanel> = ({onClick, win, visible, currency, multip
          clearInterval(timerId.current)
          setNumberAnimation(false)
     } else {
+    stopWin();
     onClick(e)
     }
   }
