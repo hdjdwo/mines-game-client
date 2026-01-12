@@ -1,0 +1,126 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: bisque;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  padding-bottom: 10%;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px); 
+  z-index: 100;
+  overflow: hidden;
+  padding-bottom: 5%;
+  cursor: pointer;
+}
+
+.wrapper_of {
+  display: none;
+}
+
+.winPanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  min-width: 320px;
+  padding: 40px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #f1c40f;
+  border-radius: 24px;
+  
+  box-shadow: 
+    0 0 30px rgba(241, 196, 15, 0.3),
+    inset 0 0 15px rgba(255, 255, 255, 0.05);
+  animation: panelAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+             pulse 2s infinite ease-in-out;
+  z-index: 10;
+}
+
+.textBlock {
+  text-align: center;
+}
+
+
+.winText {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #f1c40f;
+  text-shadow: 0 2px 0 #966909, 0 0 20px rgba(241, 196, 15, 0.5);
+}
+
+.winScore {
+  margin: 10px 0 0 0;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif; 
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+
+.coinContainer {
+  position: absolute;
+  top: -100px;
+}
+
+.coin {
+  width: 6rem;
+  height: 6rem;
+  animation: fall 3s ease-in infinite; 
+  pointer-events: none;
+  
+  filter: drop-shadow(0px 2px 0px #b8860b) drop-shadow(0px -1px 0px #ffd700);
+}
+
+  @keyframes fall {
+  0% { 
+    transform: translateY(0) rotate(0deg) rotateY(0deg); 
+  }
+  100% { 
+    transform: translateY(110vh) rotate(360deg) rotateY(720deg); 
+  }
+}
+
+@keyframes panelAppear {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 30px rgba(241, 196, 15, 0.3); }
+  50% { transform: scale(1.03); box-shadow: 0 0 50px rgba(241, 196, 15, 0.5); }
+  100% { transform: scale(1); box-shadow: 0 0 30px rgba(241, 196, 15, 0.3); }
+}
+
+
+@keyframes fall {
+  0% { 
+    transform: translateY(0) rotate(0deg) rotateY(0deg); 
+  }
+  100% { 
+  
+    transform: translateY(110vh) rotate(360deg) rotateY(720deg); 
+  }
+}
+

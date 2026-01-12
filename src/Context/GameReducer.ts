@@ -12,7 +12,8 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
         gameStatus: 'STARTED',
         field: InitialField, 
         currentScore: 0,
-        payoutTable: action.payload.payoutTable    
+        payoutTable: action.payload.payoutTable,
+        isModalOpen: false,    
       };
 
    case 'REVEAL_TILE': {
@@ -48,6 +49,12 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
   };
 }
 
+case 'CLOSE_MODAL' :
+  return {
+    ...state,
+    isModalOpen: false,
+  }
+
  
     case 'CASHOUT' :
       return {
@@ -62,7 +69,8 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
           }
         }),
         gameStatus: 'FINISHED_WIN',
-        currentScore: action.payload.winAmount
+        currentScore: action.payload.winAmount,
+        isModalOpen: true
       }
 
     case 'UPDATE_SCORE':

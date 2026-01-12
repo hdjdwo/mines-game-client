@@ -31,7 +31,9 @@ export interface GameState {
     minesCount: number;   
     betAmount: number;    
     balance: number;
-    payoutTable: { step: number; multiplier: number }[]
+    payoutTable: { step: number; multiplier: number }[],
+    isModalOpen: boolean,
+    currency: string
 }
 
 
@@ -43,7 +45,9 @@ export const initialGameState: GameState = {
     minesCount: 3,
     betAmount: 10,
     balance: 1000,
-    payoutTable: []
+    payoutTable: [],
+    isModalOpen: false,
+    currency: '$'
 };
 
 export type GameAction =
@@ -54,4 +58,5 @@ export type GameAction =
     | { type: 'SET_BALANCE'; payload: number } 
     | { type: 'UPDATE_SCORE'; payload: { reward: number } }
     | { type: 'CASHOUT'; payload: { winAmount: number; allMines: number[] } }
+    | { type: 'CLOSE_MODAL'}
   
