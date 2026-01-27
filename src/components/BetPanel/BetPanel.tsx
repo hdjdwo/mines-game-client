@@ -8,6 +8,7 @@ import { MultiplierField } from '../MultiplierField/MultiplierField';
 import { MyButton } from '../UI/Button/MyButton';
 import { Cheat } from '../CHEAT/Cheat';
 import { useEffect } from 'react';
+import { Balance } from '../Balance/Balance';
 
 
 
@@ -17,7 +18,7 @@ export const BetPanel = () => {
   const {mutate: winGameMutate, isPending: isWinPending} = useWinGame() 
   const {mutate: mutateUnfinishedGame} = useUnfinishedGame()
   const disptatch = useGameDispatch()
-  const {gameStatus, minesCount, betAmount, payoutTable, field,  gameId} = useGame()
+  const {gameStatus, minesCount, betAmount, payoutTable, field,  gameId, balance} = useGame()
   const {data: paytableData, isLoading: isPaytableLoading} = usePaytable(minesCount,gameStatus)
 
   const {data: CHEATdata, isLoading: isCHEATLoading} = useTESTWinCombo(gameId ? gameId : '')
@@ -176,6 +177,11 @@ const displayScore = (betAmount * currentMultiplier).toFixed(2);
           : 'НАЧАТЬ ИГРУ'
         }
       </MyButton>
+
+      <div className={classes.BalanceWrapper}>
+        <Balance balance={balance}/>
+      </div>
+      
 
       <Cheat mines={resultCHEAT} isLoading={isCHEATLoading} status={gameStatus.includes('FINISHED')}/>
    </div>
