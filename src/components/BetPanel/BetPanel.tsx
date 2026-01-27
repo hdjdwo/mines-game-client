@@ -1,5 +1,5 @@
 import classes from './BetPanel.module.css'
-import { useGameStatus, usePaytable, useTESTWinCombo, useWinGame} from '../../hoks/api/useGameApi';
+import { useGameStatus, usePaytable, useTESTWinCombo, useUnfinishedGame, useWinGame} from '../../hoks/api/useGameApi';
 import { MyInput } from '../UI/Input/MyInput';
 import { MySelect } from '../UI/select/MySelect';
 import {  useGame, useGameDispatch } from '../../Context/GameHoks';
@@ -7,6 +7,7 @@ import panelBackground from '../../assets/image/betPanel.png'
 import { MultiplierField } from '../MultiplierField/MultiplierField';
 import { MyButton } from '../UI/Button/MyButton';
 import { Cheat } from '../CHEAT/Cheat';
+import { useEffect } from 'react';
 
 
 
@@ -14,13 +15,42 @@ export const BetPanel = () => {
 
   const {mutate: startGameMutate, isPending: isStartPending} = useGameStatus() 
   const {mutate: winGameMutate, isPending: isWinPending} = useWinGame() 
+  const {mutate: mutateUnfinishedGame} = useUnfinishedGame()
   const disptatch = useGameDispatch()
-  const {gameStatus, minesCount, betAmount, payoutTable, field, currentScore, gameId} = useGame()
+  const {gameStatus, minesCount, betAmount, payoutTable, field,  gameId} = useGame()
   const {data: paytableData, isLoading: isPaytableLoading} = usePaytable(minesCount,gameStatus)
 
   const {data: CHEATdata, isLoading: isCHEATLoading} = useTESTWinCombo(gameId ? gameId : '')
 
   const resultCHEAT = CHEATdata?.result ? CHEATdata?.result : []
+
+  useEffect(() => {
+    mutateUnfinishedGame('Test', {
+      onSuccess: (data) => {
+        if(data.hasActiveGame) {
+          
+          disptatch({type: 'GAME_RECOVERY',
+            payload: {
+              gameId: data.gameId,
+              betAmount: data.betAmount,
+              minesCount: data.minesCount,
+              opened: data.opened,
+              paytable: data.paytable,
+              currentScore: data.currentScore,
+            }
+          })
+        } else if(data.isSettings) {
+          console.log('aaaaa')
+          disptatch({type: 'APPLY_LAST_SETTINGS',
+            payload: {
+              betAmount: data.betAmount,
+              minesCount: data.minesCount
+            }
+          })
+        }
+      }
+    })
+  }, [mutateUnfinishedGame, disptatch])
  
  const isGameActive = gameStatus === 'STARTED' || gameStatus === 'CONTINUES';
   const handleMainAction = () => {
@@ -36,7 +66,7 @@ export const BetPanel = () => {
       });
     }
   } else {
-    startGameMutate(minesCount, {
+    startGameMutate({minesCount, userBet: betAmount}, {
       onSuccess: (serverData) => {
         disptatch({ 
           type: 'START_GAME', 
@@ -101,11 +131,16 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
   zIndex: 2
 };
 
+
+const displayScore = (betAmount * currentMultiplier).toFixed(2);
+
   
   return (
   <div style={sectionStyle}  className={classes.container}>
   
     <div className={classes.BetSettings}>
+
+      
       
       <MyInput
       onChange = {(e: React.ChangeEvent<HTMLInputElement>) => disptatch({type: 'SET_BET_AMOUNT', payload: Number(e.target.value)})}
@@ -137,7 +172,7 @@ const isCurrentEpic = hasWonSomething && currentMultiplier >= 50;
         isEpic={isCurrentEpic}
       >
         {isGameActive 
-          ? hasWonSomething ? `ЗАБРАТЬ ${currentScore}` : 'ЗАБРАТЬ'
+          ? hasWonSomething ? `ЗАБРАТЬ ${displayScore}` : 'ЗАБРАТЬ'
           : 'НАЧАТЬ ИГРУ'
         }
       </MyButton>

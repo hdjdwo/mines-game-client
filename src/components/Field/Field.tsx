@@ -1,6 +1,6 @@
 import useSound from "use-sound"
 import { useGame, useGameDispatch } from "../../Context/GameHoks"
-import { useTileStatus } from "../../hoks/api/useGameApi"
+import { useTileStatus} from "../../hoks/api/useGameApi"
 import { Tile } from "../Tile/Tile"
 import classes from './Field.module.css'
 import clickSfx from '../../assets/sounds/click.mp3'
@@ -10,11 +10,12 @@ export const Field = () => {
 
   const [playClick] = useSound(clickSfx, {volume: 0.8})
   const [playClickMine] = useSound(clickMineSfx, {volume: 0.8})
-  const [playClick] = useSound(clickSfx, {volume: 0.8})
+ 
 
   const dispatch = useGameDispatch()
    const {field, gameId, gameStatus} = useGame()
    const {mutate, isPending} = useTileStatus()
+   
 
   
    const handleTileClick = (index: number) => {

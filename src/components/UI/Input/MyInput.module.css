@@ -1,59 +1,165 @@
-.Input {
- 
-  background-color: rgba(15, 17, 26, 0.8);
-  color: #E3B34C;
-  font-size: clamp(1rem, 1vh + 1rem, 2rem);
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #4A3C28;
-  border-radius: 4px;
-  height: clamp(2.5rem, 1vh + 3rem, 5rem);
+/* Прячем стандартные стрелки браузера */
+.Input::-webkit-outer-spin-button,
+.Input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.Input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .MyInputContainer {
-   position: relative;
-   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
+  gap: 6px;
 }
 
 .Label {
   color: #8B7355;
-   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
-}
-
-.inputSetting {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
-.betScale {
-  background:  linear-gradient(180deg, rgba(74, 60, 40, 0.4) 0%, rgba(45, 36, 24, 0.4) 100%);
-  padding: 4px 8px;
-  color:#C5A059;
-  width: 20%;
-  text-align: center;
   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
-  cursor: pointer;
-  
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.betScale:hover {
-  cursor: pointer;
-  background: rgba(197, 160, 89, 0.2)
+.inputWrapper {
+  display: flex;
+  width: 100%;
+  background-color: rgba(15, 17, 26, 0.9);
+  border: 2px solid #4A3C28;
+  border-radius: 6px;
+  height: clamp(2.5rem, 5vh, 3.5rem);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.inputWrapper:focus-within {
+  border-color: #E3B34C;
+}
+
+.inputFieldContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding-left: 12px;
 }
 
 .SVG {
-  box-sizing: border-box;
-  position: absolute;
-  right: 37%;
-  top: 50%;
-  padding: 0;
-  margin: 0;
-  width: 10%;
-  z-index: 100;
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
+.Input {
+  background: transparent;
+  border: none;
+  color: #E3B34C;
+  font-size: clamp(1rem, 2vw, 2rem);
+  font-weight: 600;
+  width: 100%;
+  height: 100%;
+  padding: 0 35px 0 10px; 
+  outline: none;
+}
+
+
+.customSpinners {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  height: 100%;
+  width: 20px;
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  pointer-events: none; 
+}
+
+
+.inputFieldContainer:hover .customSpinners,
+.inputWrapper:focus-within .customSpinners {
+  opacity: 1;
+  pointer-events: auto; 
+}
+
+.spinnerUp, .spinnerDown {
+  cursor: pointer;
+  height: 12px;
+  width: 100%;
+  position: relative;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+
+.spinnerUp:hover, .spinnerDown:hover {
+  opacity: 1;
+}
+
+.spinnerUp:active, .spinnerDown:active {
+  transform: scale(1.3); 
+}
+
+
+.spinnerUp::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #E3B34C;
+}
+
+.spinnerDown::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #E3B34C;
+}
+
+
+.disabledSpinners {
+  display: none !important;
+}
+
+.controls {
+  display: flex;
+  border-left: 2px solid #4A3C28;
+}
+
+.betScale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(74, 60, 40, 0.3);
+  color: #C5A059;
+  min-width: 30px;
+  padding: 0 10px;
+  font-size: clamp(1rem, 2vw, 2rem);
+  font-weight: 800;
+  cursor: pointer;
+  border-left: 1px solid #4A3C28;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.betScale:hover:not(.disabledBtn) {
+  background: rgba(197, 160, 89, 0.2);
+  color: #fff;
+}
+
+.disabledBtn {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

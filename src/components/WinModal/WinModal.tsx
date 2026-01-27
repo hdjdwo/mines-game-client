@@ -24,11 +24,13 @@ export const WinModal: FC<IWinPanel> = ({onClick, win, visible, currency, multip
   const timerId = useRef<ReturnType<typeof setInterval> | null>(null)
   const openTimeRef = useRef<number>(0)
   
+  
   useEffect(() => {
   playBackground();
   
   return () => stopBackground();
 }, [playBackground, stopBackground]);
+
   
   const coins = useMemo(() => {
   if (!visible) return [];

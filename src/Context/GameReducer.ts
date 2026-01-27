@@ -103,6 +103,29 @@ case 'CLOSE_MODAL' :
         balance: action.payload,
       };
 
+    case "GAME_RECOVERY":
+    return {
+        ...state,
+        gameStatus: 'CONTINUES',
+        betAmount: action.payload.betAmount, 
+        gameId: action.payload.gameId,
+        minesCount: action.payload.minesCount,
+        payoutTable: action.payload.paytable,
+        currentScore: action.payload.currentScore,
+        field: state.field.map((tile) => ({
+            ...tile,
+            isOpen: action.payload.opened.includes(tile.index),
+            tileStatus: action.payload.opened.includes(tile.index) ? 'EMPTY' : tile.tileStatus
+        }))
+    };
+
+    case 'APPLY_LAST_SETTINGS':
+      return {
+        ...state,
+        betAmount: action.payload.betAmount,
+        minesCount: action.payload.minesCount
+      }
+
     default:
       return state;
   }

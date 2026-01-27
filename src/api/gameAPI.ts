@@ -41,11 +41,26 @@ interface TEST_getWinCombo {
   error?: string;
 }
 
+interface UnfinishedGame {
+  hasActiveGame: boolean,
+  gameId: string,
+  betAmount: number,
+  minesCount: number,
+  opened:  number[] ,
+  error?: string,
+  paytable: {
+    step: number;
+    multiplier: number;
+}[],
+currentScore: number,
+isSettings: boolean
+}
 
- export const fetchStartGame = async (minesCount: number): Promise<StartGameResponse> => {
+
+ export const fetchStartGame = async ({minesCount, userBet} :{minesCount: number, userBet: number}): Promise<StartGameResponse> => {
   const res = await fetch(`${BASE_URL}/start-game`, {
     method: 'POST',
-    body: JSON.stringify({minesCount}),
+    body: JSON.stringify({minesCount, userBet}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
   });
   if(!res.ok) {
@@ -106,5 +121,19 @@ export const TEST_winCombo = async (gameId: string) : Promise<TEST_getWinCombo> 
     const errorData = await res.json();
     throw new Error(errorData.error || 'Failed to get wincombo.');
   }
+  return res.json()
+}
+
+export const fetchUnfinichedGame = async (userId: string) : Promise<UnfinishedGame> => {
+const res = await fetch(`${BASE_URL}/get-unfinished-game`, {
+    method: 'POST',
+    body: JSON.stringify({userId}),
+    headers: {'Content-type' : 'application/json; charset=UTF-8'}
+  });
+  if(!res.ok) {
+    const errorData = await res.json()
+    throw new Error(errorData.error || 'Failed load last game')
+  }
+
   return res.json()
 }

@@ -59,4 +59,6 @@ export type GameAction =
     | { type: 'UPDATE_SCORE'; payload: { reward: number } }
     | { type: 'CASHOUT'; payload: { winAmount: number; allMines: number[] } }
     | { type: 'CLOSE_MODAL'}
+    | { type: 'APPLY_LAST_SETTINGS', payload: {betAmount: number, minesCount: number}}
+    | {type: 'GAME_RECOVERY', payload: {currentScore: number; gameId: string, betAmount: number, minesCount: number, opened: number[], paytable: {step: number;multiplier: number;}[]} }
   
