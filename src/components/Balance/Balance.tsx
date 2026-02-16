@@ -1,4 +1,4 @@
-import React, { useState, useEffect, type FC } from 'react';
+import  { useState, useEffect, type FC } from 'react';
 import classes from './Balance.module.css';
 
 interface BalanceDisplayProps {

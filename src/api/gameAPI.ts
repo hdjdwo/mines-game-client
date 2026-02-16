@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://localhost:4000/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface IPaytable {
   step: number;
@@ -58,7 +58,7 @@ isSettings: boolean
 
 
  export const fetchStartGame = async ({minesCount, userBet} :{minesCount: number, userBet: number}): Promise<StartGameResponse> => {
-  const res = await fetch(`${BASE_URL}/start-game`, {
+  const res = await fetch(`${API_URL}/start-game`, {
     method: 'POST',
     body: JSON.stringify({minesCount, userBet}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
@@ -71,7 +71,7 @@ isSettings: boolean
 }
 
 export const fetchRevealCell = async ({ tileIndex, gameId }: { tileIndex: number, gameId: string}): Promise<RevealCellRepsonce> => {
-  const res = await fetch(`${BASE_URL}/reveal-cell`, {
+  const res = await fetch(`${API_URL}/reveal-cell`, {
     method: 'POST',
     body: JSON.stringify({ tileIndex, gameId }),
     headers: { 'Content-type': 'application/json; charset=UTF-8' }
@@ -85,7 +85,7 @@ export const fetchRevealCell = async ({ tileIndex, gameId }: { tileIndex: number
 }
 
 export const fetchPaytable = async (minesCount: number): Promise<getPaytable> => {
-  const res = await fetch(`${BASE_URL}/get-paytable`, {
+  const res = await fetch(`${API_URL}/get-paytable`, {
     method: 'POST',
     body: JSON.stringify({minesCount}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
@@ -98,7 +98,7 @@ export const fetchPaytable = async (minesCount: number): Promise<getPaytable> =>
 }
 
 export const fetchWinGame = async (gameId: string) : Promise<WinGame> => {
-  const res = await fetch(`${BASE_URL}/win-game`, {
+  const res = await fetch(`${API_URL}/win-game`, {
     method: 'POST',
     body: JSON.stringify({gameId}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
@@ -112,7 +112,7 @@ export const fetchWinGame = async (gameId: string) : Promise<WinGame> => {
 }
 
 export const TEST_winCombo = async (gameId: string) : Promise<TEST_getWinCombo> => {
-  const res = await fetch(`${BASE_URL}/test-route`, {
+  const res = await fetch(`${API_URL}/test-route`, {
     method: 'POST',
     body: JSON.stringify({gameId}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
@@ -125,7 +125,7 @@ export const TEST_winCombo = async (gameId: string) : Promise<TEST_getWinCombo> 
 }
 
 export const fetchUnfinichedGame = async (userId: string) : Promise<UnfinishedGame> => {
-const res = await fetch(`${BASE_URL}/get-unfinished-game`, {
+const res = await fetch(`${API_URL}/get-unfinished-game`, {
     method: 'POST',
     body: JSON.stringify({userId}),
     headers: {'Content-type' : 'application/json; charset=UTF-8'}
