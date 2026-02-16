@@ -9,6 +9,7 @@ import { MyButton } from '../UI/Button/MyButton';
 import { Cheat } from '../CHEAT/Cheat';
 import { useEffect } from 'react';
 import { Balance } from '../Balance/Balance';
+import { ModeSlider } from '../ModeSlider/ModeSlider';
 
 
 
@@ -18,7 +19,7 @@ export const BetPanel = () => {
   const {mutate: winGameMutate, isPending: isWinPending} = useWinGame() 
   const {mutate: mutateUnfinishedGame} = useUnfinishedGame()
   const disptatch = useGameDispatch()
-  const {gameStatus, minesCount, betAmount, payoutTable, field,  gameId, balance} = useGame()
+  const {gameStatus, minesCount, betAmount, payoutTable, field,  gameId, balance, mode, gameCount} = useGame()
   const {data: paytableData, isLoading: isPaytableLoading} = usePaytable(minesCount,gameStatus)
 
   const {data: CHEATdata, isLoading: isCHEATLoading} = useTESTWinCombo(gameId ? gameId : '')
@@ -41,7 +42,6 @@ export const BetPanel = () => {
             }
           })
         } else if(data.isSettings) {
-          console.log('aaaaa')
           disptatch({type: 'APPLY_LAST_SETTINGS',
             payload: {
               betAmount: data.betAmount,
@@ -138,7 +138,11 @@ const displayScore = (betAmount * currentMultiplier).toFixed(2);
   
   return (
   <div style={sectionStyle}  className={classes.container}>
-  
+   <div className={classes.SliderWrapper}>
+    <ModeSlider mode={mode} disabled={isGameActive || isWinPending || isStartPending}/>
+   </div>
+      
+
     <div className={classes.BetSettings}>
 
       
@@ -157,6 +161,23 @@ const displayScore = (betAmount * currentMultiplier).toFixed(2);
       onChange = {(e: React.ChangeEvent<HTMLSelectElement>) => disptatch({type: 'SET_MINES_COUNT', payload: Number(e.target.value)})}
       disabled={isGameActive || isWinPending || isStartPending}
       />
+
+<div className={mode === 'AUTO' ? classes.GameCountWrapper : classes.disabled}>
+  <MyInput
+    onChange={(e) => disptatch({type: 'SET_GAME_COUNT', payload: Number(e.target.value)})}
+    onValueChange={(newValue) => disptatch({type: 'SET_GAME_COUNT', payload: newValue})}
+    value={gameCount}
+    disabled={isGameActive || isWinPending || isStartPending}
+    type='number'
+    name='game_count'
+    labelText='Количество ставок'
+    showCurrency={false}  
+    showControls={false}  
+    betSetting={{ min: 1, max: 100, step: 1 }} 
+
+  />
+</div>
+      
     </div>
     <MultiplierField 
     isCurrentEpic={isCurrentEpic} 
@@ -168,7 +189,7 @@ const displayScore = (betAmount * currentMultiplier).toFixed(2);
     <MyButton 
         handleStartGame={handleMainAction} 
         isPending={isWinPending || isStartPending} 
-        isFirstStep={gameStatus === 'STARTED' && currentStep === 0}
+        isFirstStep={isGameActive && currentStep === 0}
         isFire={isCurrentFire}
         isEpic={isCurrentEpic}
       >

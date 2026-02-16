@@ -1,6 +1,6 @@
 .StartGame {
   margin-top: 3rem;
-  font-size: 2rem;
+  font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
   background: linear-gradient(180deg, #BF953F 0%, #FCF6BA 30%, #B38728 70%, #AA771C 100%);
   color: #2A1B0A;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);

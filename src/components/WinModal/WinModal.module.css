@@ -124,3 +124,21 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .winPanel {
+    width: 40%;
+    min-width: 1px;
+    max-height: 20%;
+  }
+  .winText {
+    font-size: clamp(1rem, 2vw, 2rem);
+  }
+  .winScore{
+    font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+  }
+  .coin {
+    width: 2rem;
+  height: 2rem;
+  }
+}
+

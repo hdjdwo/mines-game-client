@@ -8,3 +8,13 @@
   box-shadow: 10px 0 15px -5px  rgba(0,0,0,0.35);
   width: 60dvw;
 }
+
+
+
+/* @media (max-width: 1024px) {
+ .container {
+  height: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+ }
+} */

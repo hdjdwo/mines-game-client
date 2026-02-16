@@ -2,6 +2,7 @@
 
 type TileStatus = 'CLOSE' | 'MINE' | 'EMPTY' 
 type GameStatus = 'STARTED' | 'FINISHED_LOSE' | 'CONTINUES' | 'FINISHED_WIN'
+type GameMode = 'AUTO' | 'MANUAL'
 
 export interface TileState {
   index: number;
@@ -33,7 +34,9 @@ export interface GameState {
     balance: number;
     payoutTable: { step: number; multiplier: number }[],
     isModalOpen: boolean,
-    currency: string
+    currency: string,
+    mode: GameMode,
+    gameCount: number
 }
 
 
@@ -47,7 +50,9 @@ export const initialGameState: GameState = {
     balance: 1000,
     payoutTable: [],
     isModalOpen: false,
-    currency: '$'
+    currency: '$',
+    mode: 'MANUAL',
+    gameCount: 0
 };
 
 export type GameAction =
@@ -61,4 +66,6 @@ export type GameAction =
     | { type: 'CLOSE_MODAL'}
     | { type: 'APPLY_LAST_SETTINGS', payload: {betAmount: number, minesCount: number}}
     | {type: 'GAME_RECOVERY', payload: {currentScore: number; gameId: string, betAmount: number, minesCount: number, opened: number[], paytable: {step: number;multiplier: number;}[]} }
+    | {type : 'CHANGE_MODE', payload: 'AUTO' | 'MANUAL'}
+    | {type: 'SET_GAME_COUNT', payload: number}
   

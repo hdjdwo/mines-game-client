@@ -10,7 +10,7 @@
     gap: 15px;
     width: 100%;
     margin-top: 40px;
-    min-height: 100px;
+    height: clamp(6rem, 2vw, 9rem);
     transition: all 0.8s ease;
     z-index: 10;
 }
@@ -39,7 +39,7 @@
 .paytable_element {
     position: relative;
     z-index: 10;
-    color: #dea936;
+    color: #fdb722;
     transition: all 0.4s ease-in-out;
     min-width: 90px;
     height: 80px;
@@ -52,6 +52,7 @@
 .multiplier_text {
     position: relative;
     z-index: 15;
+    font-size: clamp(1rem, 2vw, 2rem);
 }
 
 

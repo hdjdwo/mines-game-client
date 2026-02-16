@@ -1,9 +1,9 @@
 .Select {
  background-color: rgba(15, 17, 26, 0.8);
   color: #E3B34C;
-  font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+  font-size: clamp(1rem, 2vw, 2rem);
   width: 100%;
-   height: clamp(2.5rem, 1vh + 3rem, 5rem);
+   height: clamp(3rem, 1vw, 6rem);
    border-radius: 4px;
 }
 
@@ -17,4 +17,6 @@
 .Label {
   color: #8B7355;
   font-size: clamp(1rem, 1vh + 1rem, 2.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

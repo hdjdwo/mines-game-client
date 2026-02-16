@@ -20,3 +20,31 @@
  margin-right: auto;
  margin-left: 3rem;
 }
+
+.SliderWrapper {
+  width: 90%;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.GameCountWrapper {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.disabled {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    order: 1;
+    display: flex;
+    width: 100%;
+    height: 70vh;
+   
+  }
+  .BalanceWrapper {
+    margin: 0;
+  }
+}

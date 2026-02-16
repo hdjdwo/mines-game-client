@@ -17,6 +17,9 @@ interface MyInputProps {
   onValueChange?: (newValue: number) => void;
   disabled: boolean;
   betSetting?: betSettingProps;
+  
+  showCurrency?: boolean;
+  showControls?: boolean;
 }
 
 export const MyInput: FC<MyInputProps> = ({
@@ -27,6 +30,8 @@ export const MyInput: FC<MyInputProps> = ({
   value,
   onChange,
   onValueChange,
+  showCurrency = true, 
+  showControls = true, 
 }) => {
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +64,7 @@ export const MyInput: FC<MyInputProps> = ({
       
       <div className={classes.inputWrapper}>
         <div className={classes.inputFieldContainer}>
-          <img className={classes.SVG} src={dollarIcon} alt="currency" />
+          {showCurrency && <img className={classes.SVG} src={dollarIcon} alt="currency" />}
           
           <input 
             className={classes.Input} 
@@ -76,14 +81,16 @@ export const MyInput: FC<MyInputProps> = ({
           </div>
         </div>
 
-        <div className={classes.controls}>
-          <div onClick={handleHalf} className={`${classes.betScale} ${disabled ? classes.disabledBtn : ''}`}>
-            1/2
+        {showControls && (
+          <div className={classes.controls}>
+            <div onClick={handleHalf} className={`${classes.betScale} ${disabled ? classes.disabledBtn : ''}`}>
+              1/2
+            </div>
+            <div onClick={handleDouble} className={`${classes.betScale} ${disabled ? classes.disabledBtn : ''}`}>
+              2x
+            </div>
           </div>
-          <div onClick={handleDouble} className={`${classes.betScale} ${disabled ? classes.disabledBtn : ''}`}>
-            2x
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

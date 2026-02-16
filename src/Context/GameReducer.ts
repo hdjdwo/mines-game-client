@@ -126,6 +126,26 @@ case 'CLOSE_MODAL' :
         minesCount: action.payload.minesCount
       }
 
+      case 'CHANGE_MODE':
+        if(state.gameStatus.includes("FINISHED") || state.mode === 'AUTO') {
+          return {
+          ...state,
+          mode: action.payload,
+          field: InitialField
+        }
+        }
+        return {
+          ...state,
+          mode: action.payload
+        }
+
+        case 'SET_GAME_COUNT':
+          return {
+            ...state,
+            gameCount: action.payload
+          }
+
+
     default:
       return state;
   }

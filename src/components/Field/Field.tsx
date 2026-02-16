@@ -22,8 +22,6 @@ export const Field = () => {
     if(!gameId || field[index].isOpen || gameStatus.includes('FINISHED') || isPending) {
       return
     }
-
-
     mutate(
       {tileIndex: index, gameId},
       {
